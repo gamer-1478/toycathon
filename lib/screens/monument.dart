@@ -138,12 +138,6 @@ class _MonumentContentState extends State<MonumentContent> {
     });
   }*/
 
-  /*@override
-  void initState() {
-    super.initState();
-    _asyncMethodInnitState();
-  }*/
-
   /*god this was hell, wasted like 3 hours, trying to update the name of the user, after welcome.
   void _asyncMethodInnitState() async {
     await getAllowRead();
