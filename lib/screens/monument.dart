@@ -102,47 +102,6 @@ class _MonumentContentState extends State<MonumentContent> {
     });
   }
 
-  /*Future<void> getAllowRead() async {
-    final prefs = await SharedPreferences.getInstance();
-    uid = prefs.getString('GLOBAL_USER_DATA');
-
-    await users
-        .doc(uid.toString())
-        .collection(widget.snumber.toString())
-        .doc(widget.snumber.toString())
-        .get()
-        .then((documentSnapshot) {
-      if (widget.snumber == 1) {
-        setState(() {
-          allowRead = true;
-          showNotAllowed = false;
-        });
-      } else if (documentSnapshot.exists) {
-        if (documentSnapshot.data()[widget.snumber.toString()] == true) {
-          setState(() {
-            allowRead = true;
-            showNotAllowed = false;
-          });
-        } else {
-          setState(() {
-            allowRead = false;
-            showNotAllowed = true;
-          });
-        }
-      } else {
-        setState(() {
-          allowRead = false;
-          showNotAllowed = true;
-        });
-      }
-    });
-  }*/
-
-  /*god this was hell, wasted like 3 hours, trying to update the name of the user, after welcome.
-  void _asyncMethodInnitState() async {
-    await getAllowRead();
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
