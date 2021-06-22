@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:bharat_mystery/screens/mainGame.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Game extends StatefulWidget {
   const Game({Key pagekey, this.title}) : super(key: pagekey);
@@ -53,6 +54,46 @@ class _GameContentState extends State<GameContent> {
   String _player1Name, _player2Name;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List players = [];
+
+  Future _setListFromSharedPref() async {
+    var allCards = {
+      {"name": "Ajanta and Ellora Caves", "Snumber": 1, "price": 60, "bnum": 1},
+      {"name": "Hawa Mahal", "Snumber": 4, "price": 60, "bnum": 3},
+      {"name": "New Delhi Railway Station", "price": 200, "bnum": 5},
+      {"name": "Golden Temple", "Snumber": 3, "price": 100, "bnum": 6},
+      {"name": "Gateway of India", "Snumber": 2, "price": 100, "bnum": 8},
+      {"name": "Humayun’s Tomb", "Snumber": 5, "price": 120, "bnum": 9},
+      {"name": "Victoria Memorial", "Snumber": 11, "price": 140, "bnum": 11},
+      {"name": "Electric Company", "price": 150, "bnum": 12},
+      {"name": "Sun Temple", "Snumber": 7, "price": 140, "bnum": 13},
+      {"name": "Agra Fort", "Snumber": 12, "price": 160, "bnum": 14},
+      {"name": "Mumbai Railway's Station", "price": 200, "bnum": 15},
+      {"name": "Fatehpur Sikri", "Snumber": 15, "price": 180, "bnum": 16},
+      {"name": "Mysore Palace", "Snumber": 16, "price": 180, "bnum": 18},
+      {"name": "Sanchi Stupa", "Snumber": 14, "price": 200, "bnum": 19},
+      {"name": "Lotus Temple", "Snumber": 13, "price": 220, "bnum": 21},
+      {"name": " ", "price": 220, "bnum": 23},
+      {"name": " ", "price": 240, "bnum": 24},
+      {"name": "Howrah Railway Station", "price": 200, "bnum": 25},
+      {"name": "Jantar Mantar", "Snumber": 20, "price": 260, "bnum": 26},
+      {
+        "name": "Vivekananda Rock Memorial",
+        "Snumber": 19,
+        "price": 260,
+        "bnum": 27
+      },
+      {"name": "Waterways", "price": 150, "bnum": 28},
+      {"name": "Charminar", "Snumber": 18, "price": 280, "bnum": 29},
+      {"name": "Raj Ghat", "Snumber": 17, "price": 300, "bnum": 31},
+      {"name": "Qutub Minar", "Snumber": 8, "price": 320, "bnum": 32},
+      {"name": "Red Fort", "Snumber": 9, "price": 320, "bnum": 34},
+      {"name": "Chennai Railway Station", "price": 200, "bnum": 35},
+      {"name": "India Gate", "Snumber": 6, "price": 350, "bnum": 37},
+      {"name": "Taj Mahal", "Snumber": 10, "price": 400, "bnum": 39},
+    };
+    final prefs = await SharedPreferences.getInstance();
+    //await prefs.setStringList("availableCards", allCards);
+  }
 
   @override
   Widget build(BuildContext context) {
