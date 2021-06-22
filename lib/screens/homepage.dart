@@ -1,6 +1,7 @@
 import 'package:bharat_mystery/screens/profile.dart';
 import 'package:bharat_mystery/screens/selectMonument.dart';
 import 'package:bharat_mystery/screens/theme_provider.dart';
+import 'package:bharat_mystery/screens/game.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   PageController _pageController = PageController();
   List<Widget> _screens = [
     SelectMonument(),
+    Game(),
     Profile(),
   ];
 
@@ -45,6 +47,11 @@ class _HomePageState extends State<HomePage> {
                 items: <Widget>[
                   Icon(
                     Icons.info,
+                    size: 20.0,
+                    color: Theme.of(context).highlightColor,
+                  ),
+                  Icon(
+                    Icons.gamepad,
                     size: 20.0,
                     color: Theme.of(context).highlightColor,
                   ),

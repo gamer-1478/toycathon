@@ -1,4 +1,5 @@
 import 'package:bharat_mystery/screens/homepage.dart';
+import 'package:bharat_mystery/screens/mainGame.dart';
 import 'package:bharat_mystery/screens/selectMonument.dart';
 import 'package:bharat_mystery/screens/theme_provider.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
                 '/register-page': (_) => RegisterPage(),
                 '/home-page': (_) => HomePage(),
                 '/forgot-password-page': (_) => ForgotPage(),
-                '/select-monument': (_) => SelectMonument()
+                '/select-monument': (_) => SelectMonument(),
+                '/main-game': (_) => MainGame(),
               });
         },
       ),

@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -60,7 +59,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                  20.0, 300.0, 20.0, 0), //text username
+                  20.0, 200.0, 20.0, 0), //text username
               child: Column(
                 children: <Widget>[
                   new Text(
