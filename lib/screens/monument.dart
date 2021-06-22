@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter/services.dart';
 
 class MapUtils {
   MapUtils._();
@@ -38,10 +39,23 @@ class Monument extends StatefulWidget {
 class _MonumentState extends State<Monument> {
   Future<bool> _onWillPop() {
     return showDialog(
-        context: context,
-        builder: (context) {
-          Navigator.of(context).pop(true);
-        });
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text('Do you want to exit the app?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () => SystemNavigator.pop(),
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
   }
 
   @override

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter/services.dart';
+import 'homepage.dart';
 
 class MainGame extends StatefulWidget {
   final List players;
@@ -10,6 +12,48 @@ class MainGame extends StatefulWidget {
 }
 
 class _MainGameState extends State<MainGame> {
+  Future<bool> _onWillPop() {
+    return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text('Do you want to exit the app?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () => SystemNavigator.pop(),
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
+  Future<bool> _endGame() {
+    return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text('Do you want to End the Game?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () => HomePage(),
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
   String player1Initials;
   String player2Initials;
 
@@ -32,8 +76,9 @@ class _MainGameState extends State<MainGame> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -175,9 +220,7 @@ class _MainGameState extends State<MainGame> {
                 ),
                 MaterialButton(
                   onPressed: () {
-                    setState(() {
-                      newDiceImage = Random().nextInt(6) + 1;
-                    });
+                    _endGame();
                   },
                   height: 50.0,
                   padding: EdgeInsets.symmetric(horizontal: 40.0),
