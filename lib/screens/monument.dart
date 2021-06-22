@@ -10,8 +10,8 @@ import 'package:latlong/latlong.dart';
 import "package:flutter_tts/flutter_tts.dart";
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MapUtils {
   MapUtils._();
@@ -117,6 +117,17 @@ class _MonumentContentState extends State<MonumentContent> {
         }
 
         final result = json.decode(snapshot.data);
+        String videoId = result["ytUrl"].toString();
+        YoutubePlayerController _controller = YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: YoutubePlayerFlags(
+              autoPlay: false,
+              mute: false,
+              isLive: false,
+              loop: false,
+              disableDragSeek: false,
+              forceHD: false),
+        );
 
         return Scaffold(
           body: Container(
@@ -313,6 +324,14 @@ class _MonumentContentState extends State<MonumentContent> {
                               height: 5.0,
                             ),
 
+                            //video
+                            YoutubePlayer(
+                                controller: _controller,
+                                liveUIColor: Colors.amber),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -339,6 +358,7 @@ class _MonumentContentState extends State<MonumentContent> {
                               indent: 40.0,
                               color: Colors.black,
                             ),
+
                             // play quiz button
                             MaterialButton(
                               splashColor: Colors.white,
