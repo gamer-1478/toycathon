@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:bharat_mystery/screens/mainGame.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +58,7 @@ class _GameContentState extends State<GameContent> {
   List players = [];
 
   Future _setListFromSharedPref() async {
-    var allCards = {
+    var allCards = [
       {"name": "Ajanta and Ellora Caves", "Snumber": 1, "price": 60, "bnum": 1},
       {"name": "Hawa Mahal", "Snumber": 4, "price": 60, "bnum": 3},
       {"name": "New Delhi Railway Station", "price": 200, "bnum": 5},
@@ -90,9 +92,12 @@ class _GameContentState extends State<GameContent> {
       {"name": "Chennai Railway Station", "price": 200, "bnum": 35},
       {"name": "India Gate", "Snumber": 6, "price": 350, "bnum": 37},
       {"name": "Taj Mahal", "Snumber": 10, "price": 400, "bnum": 39},
-    };
+    ];
     final prefs = await SharedPreferences.getInstance();
-    //await prefs.setStringList("availableCards", allCards);
+    String newAllCards = jsonEncode(allCards);
+    await prefs.setString("availableCards", newAllCards);
+    await prefs.setString("player1Cards", jsonEncode([]));
+    await prefs.setString("player2Cards", jsonEncode([]));
   }
 
   @override
@@ -221,7 +226,8 @@ class _GameContentState extends State<GameContent> {
     );
   }
 
-  void addUser() {
+  void addUser() async {
+    await _setListFromSharedPref();
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();

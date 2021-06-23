@@ -80,7 +80,7 @@ class _MainGameState extends State<MainGame> {
     var nameparts1 = widget.players[0].split(" ");
     var p1I = nameparts1[0][0].toUpperCase() + nameparts1[1][0].toUpperCase();
     player1Initials = p1I;
-
+    _setListFromSharedPref();
     var nameparts2 = widget.players[1].split(" ");
     var p2I = nameparts2[0][0].toUpperCase() + nameparts2[1][0].toUpperCase();
     player2Initials = p2I;
@@ -174,10 +174,12 @@ class _MainGameState extends State<MainGame> {
                         activeColor1 = Colors.black;
                         activeColor2 = Colors.blue;
                         activePlayer = true;
+                        _setListFromSharedPref();
                       } else {
                         activeColor1 = Colors.blue;
                         activeColor2 = Colors.black;
                         activePlayer = false;
+                        _setListFromSharedPref();
                       }
                     });
                   },
