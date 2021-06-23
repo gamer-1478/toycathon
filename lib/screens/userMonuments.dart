@@ -92,7 +92,11 @@ class _UserMonumentsState extends State<UserMonuments> {
                                                 (gottenCards[index])["Snumber"],
                                           ),
                                         ));
-                                  } else {}
+                                  } else {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Data Will be added In the Future!! Stay Tuned..");
+                                  }
                                 },
                               ),
                             );

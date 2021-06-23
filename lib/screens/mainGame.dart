@@ -122,8 +122,8 @@ class _MainGameState extends State<MainGame> {
   }
 
   int newDiceImage = 1;
-  Color activeColor1 = Colors.blue;
-  Color activeColor2 = Colors.black;
+  Color activeColor1 = Colors.black;
+  Color activeColor2 = Colors.blue;
 
   @override
   Widget build(BuildContext context) {
