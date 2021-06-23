@@ -95,6 +95,8 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
                           .length, // response from db <List of dicts>(json decoded)
                       itemBuilder: (context, index) {
                         return Card(
+                          elevation: 5.0,
+                          shadowColor: Colors.black,
                           child: ListTile(
                             leading: Icon(Icons.place,
                                 color: Theme.of(context).highlightColor),
