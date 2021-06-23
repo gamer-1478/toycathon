@@ -84,8 +84,6 @@ class _MainGameState extends State<MainGame> {
     // TODO: implement initState
     super.initState();
     var nameparts1 = widget.players[0].split(" ");
-    var p1I = nameparts1[0][0].toUpperCase() + nameparts1[1][0].toUpperCase();
-    player1Initials = p1I;
     _setListFromSharedPref();
     if (nameparts1.length == 2) {
       var p1I = nameparts1[0][0].toUpperCase() + nameparts1[1][0].toUpperCase();
@@ -94,7 +92,6 @@ class _MainGameState extends State<MainGame> {
       var p1I = nameparts1[0][0].toUpperCase();
       player1Initials = p1I;
     }
-
     var nameparts2 = widget.players[1].split(" ");
     if (nameparts2.length == 2) {
       var p2I = nameparts2[0][0].toUpperCase() + nameparts2[1][0].toUpperCase();
@@ -237,7 +234,7 @@ class _MainGameState extends State<MainGame> {
                       style: TextStyle(
                           fontFamily: 'LexendDeca',
                           fontSize: 16.0,
-                          color: Theme.of(context).cardColor),
+                          color: Theme.of(context).highlightColor),
                     ),
                   ),
                   SizedBox(
