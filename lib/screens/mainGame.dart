@@ -1,6 +1,8 @@
+import 'package:bharat_mystery/screens/availableCards.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'homepage.dart';
 
 class MainGame extends StatefulWidget {
@@ -12,6 +14,16 @@ class MainGame extends StatefulWidget {
 }
 
 class _MainGameState extends State<MainGame> {
+  var availableCardsMain = [];
+  var player1Cards = [];
+  var player2Cards = [];
+  var activePlayer = false;
+
+  Future _setListFromSharedPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("CurrentPlayer", activePlayer);
+  }
+
   Future<bool> _onWillPop() {
     return showDialog(
           context: context,
@@ -40,12 +52,16 @@ class _MainGameState extends State<MainGame> {
             title: Text('Are you sure?'),
             content: Text('Do you want to End the Game?'),
             actions: <Widget>[
+              //no
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
                 child: Text('No'),
               ),
+              //yes
               TextButton(
-                onPressed: () => HomePage(),
+                onPressed: () {
+                  HomePage();
+                },
                 child: Text('Yes'),
               ),
             ],
@@ -64,7 +80,7 @@ class _MainGameState extends State<MainGame> {
     var nameparts1 = widget.players[0].split(" ");
     var p1I = nameparts1[0][0].toUpperCase() + nameparts1[1][0].toUpperCase();
     player1Initials = p1I;
-
+    _setListFromSharedPref();
     var nameparts2 = widget.players[1].split(" ");
     var p2I = nameparts2[0][0].toUpperCase() + nameparts2[1][0].toUpperCase();
     player2Initials = p2I;
@@ -89,6 +105,7 @@ class _MainGameState extends State<MainGame> {
             padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
             child: Column(
               children: <Widget>[
+                //players
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -129,6 +146,7 @@ class _MainGameState extends State<MainGame> {
                 SizedBox(
                   height: 40.0,
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -155,9 +173,13 @@ class _MainGameState extends State<MainGame> {
                       if (activeColor1 == Colors.blue) {
                         activeColor1 = Colors.black;
                         activeColor2 = Colors.blue;
+                        activePlayer = true;
+                        _setListFromSharedPref();
                       } else {
                         activeColor1 = Colors.blue;
                         activeColor2 = Colors.black;
+                        activePlayer = false;
+                        _setListFromSharedPref();
                       }
                     });
                   },
@@ -176,11 +198,14 @@ class _MainGameState extends State<MainGame> {
                 SizedBox(
                   height: 30.0,
                 ),
+
                 MaterialButton(
                   onPressed: () {
-                    setState(() {
-                      newDiceImage = Random().nextInt(6) + 1;
-                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AvailableCards(),
+                        ));
                   },
                   height: 50.0,
                   padding: EdgeInsets.symmetric(horizontal: 40.0),
@@ -197,6 +222,7 @@ class _MainGameState extends State<MainGame> {
                 SizedBox(
                   height: 20.0,
                 ),
+
                 MaterialButton(
                   onPressed: () {
                     setState(() {
@@ -218,6 +244,7 @@ class _MainGameState extends State<MainGame> {
                 SizedBox(
                   height: 30.0,
                 ),
+
                 MaterialButton(
                   onPressed: () {
                     _endGame();
