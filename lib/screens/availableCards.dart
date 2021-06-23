@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,26 +12,32 @@ class AvailableCards extends StatefulWidget {
 
 class _AvailableCardsState extends State<AvailableCards> {
   var currentPlayer = false;
-  var player1Cards = [];
-  var player2Cards = [];
-  var gottenCards = [];
+  List player1Cards = [];
+  List player2Cards = [];
+  List gottenCards = [];
 
   Future _getListFromSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
-    gottenCards = await jsonDecode(prefs.getString("availableCards"));
+    gottenCards =
+        List.from(jsonDecode(prefs.getString("availableCards"))).toList();
     currentPlayer = prefs.getBool("CurrentPlayer");
-    player1Cards = await jsonDecode(prefs.getString("player1Cards"));
-    player2Cards = await jsonDecode(prefs.getString("player2Cards"));
-    log(gottenCards.toString());
+    player1Cards =
+        List.from(await jsonDecode(prefs.getString("player1Cards"))).toList();
+    player2Cards =
+        List.from(await jsonDecode(prefs.getString("player2Cards"))).toList();
+    print(gottenCards.toString());
+    print(player1Cards.toString());
+    print(player2Cards.toString());
     return (gottenCards);
   }
 
   Future _setListFromSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
+    print(player1Cards.toString() + player2Cards.toString());
     await prefs.setString("availableCards", jsonEncode(gottenCards));
     await prefs.setString("player1Cards", jsonEncode(player1Cards));
     await prefs.setString("player2Cards", jsonEncode(player2Cards));
-    _onWillPop();
+    Navigator.of(context).pop();
   }
 
   @override
@@ -55,17 +59,6 @@ class _AvailableCardsState extends State<AvailableCards> {
     return FutureBuilder(
         future: _getListFromSharedPref(),
         builder: (context, snapshot) {
-          /*if (!snapshot.hasData) {
-            return Scaffold(
-              backgroundColor: Theme.of(context).focusColor,
-              body: Center(
-                  child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),
-              )),
-            );
-          }
-          final gottenCards = json.decode(snapshot.data);*/
-
           return WillPopScope(
               onWillPop: _onWillPop,
               child: Container(
@@ -113,14 +106,20 @@ class _AvailableCardsState extends State<AvailableCards> {
                                             TextButton(
                                               onPressed: () {
                                                 if (currentPlayer == false) {
-                                                  player1Cards.addAll(
-                                                      gottenCards[index]);
+                                                  player1Cards
+                                                      .add(gottenCards[index]);
                                                   gottenCards.removeAt(index);
+                                                  //print(player1Cards);
+                                                  Navigator.of(context)
+                                                      .pop(false);
                                                   _setListFromSharedPref();
                                                 } else {
-                                                  player2Cards.addAll(
-                                                      gottenCards[index]);
+                                                  player2Cards
+                                                      .add(gottenCards[index]);
+                                                  //print(player2Cards);
                                                   gottenCards.removeAt(index);
+                                                  Navigator.of(context)
+                                                      .pop(false);
                                                   _setListFromSharedPref();
                                                 }
                                               },
