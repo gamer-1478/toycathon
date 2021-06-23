@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'package:bharat_mystery/screens/availableCards.dart';
+import 'package:bharat_mystery/screens/creditDebit.dart';
+import 'package:bharat_mystery/screens/userMonuments.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bharat_mystery/screens/homepage.dart' as HomePage;
 
@@ -18,10 +22,24 @@ class _MainGameState extends State<MainGame> {
   var player1Cards = [];
   var player2Cards = [];
   var activePlayer = false;
+  var player1Money = 0;
+  var player2Money = 0;
 
   Future _setListFromSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool("CurrentPlayer", activePlayer);
+  }
+
+  Future _getListFromSharedPref() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      player1Money = prefs.getInt("player1Money");
+      player2Money = prefs.getInt("player2Money");
+      player1Cards =
+          List.from(jsonDecode(prefs.getString("player1Cards"))).toList();
+      player2Cards =
+          List.from(jsonDecode(prefs.getString("player2Cards"))).toList();
+    });
   }
 
   Future<bool> _onWillPop() {
@@ -83,8 +101,9 @@ class _MainGameState extends State<MainGame> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    var nameparts1 = widget.players[0].split(" ");
     _setListFromSharedPref();
+    _getListFromSharedPref();
+    var nameparts1 = widget.players[0].split(" ");
     if (nameparts1.length == 2) {
       var p1I = nameparts1[0][0].toUpperCase() + nameparts1[1][0].toUpperCase();
       player1Initials = p1I;
@@ -122,7 +141,7 @@ class _MainGameState extends State<MainGame> {
               padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
               child: Column(
                 children: <Widget>[
-                  //players
+                  //players and money
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
@@ -169,7 +188,7 @@ class _MainGameState extends State<MainGame> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        '₹ 1500',
+                        '₹' + " " + player1Money.toString(),
                         style: TextStyle(
                           color: Theme.of(context).highlightColor,
                           fontFamily: 'LexendDeca',
@@ -177,7 +196,7 @@ class _MainGameState extends State<MainGame> {
                         ),
                       ),
                       Text(
-                        '₹ 1500',
+                        '₹' + " " + player2Money.toString(),
                         style: TextStyle(
                           color: Theme.of(context).highlightColor,
                           fontFamily: 'LexendDeca',
@@ -190,6 +209,7 @@ class _MainGameState extends State<MainGame> {
                     height: 40.0,
                   ),
 
+                  //dice and roll
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -241,19 +261,20 @@ class _MainGameState extends State<MainGame> {
                     height: 30.0,
                   ),
 
+                  //available monuments
                   MaterialButton(
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => AvailableCards(),
-                          ));
+                          )).then((value) => {_getListFromSharedPref()});
                     },
                     height: 50.0,
                     padding: EdgeInsets.symmetric(horizontal: 40.0),
                     shape: StadiumBorder(),
                     child: Text(
-                      "Available Monuments",
+                      "Available Cards",
                       style: TextStyle(
                           fontFamily: 'LexendDeca',
                           fontSize: 16.0,
@@ -265,17 +286,59 @@ class _MainGameState extends State<MainGame> {
                     height: 20.0,
                   ),
 
+                  //my monuments
                   MaterialButton(
                     onPressed: () {
-                      setState(() {
-                        newDiceImage = Random().nextInt(6) + 1;
-                      });
+                      if (activePlayer == false &&
+                          player1Cards.isEmpty == false) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserMonuments(),
+                            )).then((value) => {_getListFromSharedPref()});
+                      } else if (activePlayer == true &&
+                          player2Cards.isEmpty == false) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserMonuments(),
+                            )).then((value) => {_getListFromSharedPref()});
+                      } else {
+                        Fluttertoast.showToast(
+                            msg:
+                                "you have no cards to view, please unlock a card to view more");
+                      }
                     },
                     height: 50.0,
                     padding: EdgeInsets.symmetric(horizontal: 40.0),
                     shape: StadiumBorder(),
                     child: Text(
-                      "My Monuments",
+                      "My Cards",
+                      style: TextStyle(
+                          fontFamily: 'LexendDeca',
+                          fontSize: 16.0,
+                          color: Theme.of(context).cardColor),
+                    ),
+                    color: Theme.of(context).highlightColor,
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+
+                  //Debit Credit to bank or other player
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreditDebit(),
+                          )).then((value) => {_getListFromSharedPref()});
+                    },
+                    height: 50.0,
+                    padding: EdgeInsets.symmetric(horizontal: 40.0),
+                    shape: StadiumBorder(),
+                    child: Text(
+                      "Debit/Credit",
                       style: TextStyle(
                           fontFamily: 'LexendDeca',
                           fontSize: 16.0,

@@ -74,8 +74,8 @@ class _GameContentState extends State<GameContent> {
       {"name": "Mysore Palace", "Snumber": 16, "price": 180, "bnum": 18},
       {"name": "Sanchi Stupa", "Snumber": 14, "price": 200, "bnum": 19},
       {"name": "Lotus Temple", "Snumber": 13, "price": 220, "bnum": 21},
-      {"name": " ", "price": 220, "bnum": 23},
-      {"name": " ", "price": 240, "bnum": 24},
+      {"name": "Statue of Unity", "Snumber": 21, "price": 220, "bnum": 23},
+      {"name": "Kanch Mahal", "Snumber": 22, "price": 240, "bnum": 24},
       {"name": "Howrah Railway Station", "price": 200, "bnum": 25},
       {"name": "Jantar Mantar", "Snumber": 20, "price": 260, "bnum": 26},
       {
@@ -98,6 +98,8 @@ class _GameContentState extends State<GameContent> {
     await prefs.setString("availableCards", newAllCards);
     await prefs.setString("player1Cards", jsonEncode([]));
     await prefs.setString("player2Cards", jsonEncode([]));
+    await prefs.setInt("player1Money", 1500);
+    await prefs.setInt("player2Money", 1500);
   }
 
   @override

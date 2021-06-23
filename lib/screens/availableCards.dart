@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AvailableCards extends StatefulWidget {
@@ -15,6 +16,8 @@ class _AvailableCardsState extends State<AvailableCards> {
   List player1Cards = [];
   List player2Cards = [];
   List gottenCards = [];
+  var player1Money = 0;
+  var player2Money = 0;
 
   Future _getListFromSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
@@ -25,18 +28,24 @@ class _AvailableCardsState extends State<AvailableCards> {
         List.from(await jsonDecode(prefs.getString("player1Cards"))).toList();
     player2Cards =
         List.from(await jsonDecode(prefs.getString("player2Cards"))).toList();
-    print(gottenCards.toString());
-    print(player1Cards.toString());
-    print(player2Cards.toString());
+    player1Money = prefs.getInt("player1Money");
+    player2Money = prefs.getInt("player2Money");
     return (gottenCards);
   }
 
   Future _setListFromSharedPref() async {
     final prefs = await SharedPreferences.getInstance();
-    print(player1Cards.toString() + player2Cards.toString());
+    print(player1Cards.toString() +
+        player2Cards.toString() +
+        " " +
+        player1Money.toString() +
+        " " +
+        player2Money.toString());
     await prefs.setString("availableCards", jsonEncode(gottenCards));
     await prefs.setString("player1Cards", jsonEncode(player1Cards));
     await prefs.setString("player2Cards", jsonEncode(player2Cards));
+    await prefs.setInt("player1Money", player1Money);
+    await prefs.setInt("player2Money", player2Money);
     Navigator.of(context).pop();
   }
 
@@ -82,7 +91,12 @@ class _AvailableCardsState extends State<AvailableCards> {
                               child: ListTile(
                                 leading: Icon(Icons.place,
                                     color: Theme.of(context).highlightColor),
-                                title: Text((gottenCards[index])["name"],
+                                title: Text(
+                                    (gottenCards[index])["name"] +
+                                        "  " +
+                                        '₹' +
+                                        " " +
+                                        gottenCards[index]["price"].toString(),
                                     style: TextStyle(
                                         color:
                                             Theme.of(context).highlightColor)),
@@ -105,22 +119,40 @@ class _AvailableCardsState extends State<AvailableCards> {
                                             ),
                                             TextButton(
                                               onPressed: () {
-                                                if (currentPlayer == false) {
+                                                if (currentPlayer == false &&
+                                                    player1Money >=
+                                                        gottenCards[index]
+                                                            ["price"]) {
                                                   player1Cards
                                                       .add(gottenCards[index]);
+                                                  player1Money = player1Money -
+                                                      gottenCards[index]
+                                                          ["price"];
                                                   gottenCards.removeAt(index);
-                                                  //print(player1Cards);
+                                                  Navigator.of(context)
+                                                      .pop(false);
+                                                  _setListFromSharedPref();
+                                                } else if (player2Money >=
+                                                    gottenCards[index]
+                                                        ["price"]) {
+                                                  player2Cards
+                                                      .add(gottenCards[index]);
+                                                  player2Money = player2Money -
+                                                      gottenCards[index]
+                                                          ["price"];
+                                                  gottenCards.removeAt(index);
                                                   Navigator.of(context)
                                                       .pop(false);
                                                   _setListFromSharedPref();
                                                 } else {
-                                                  player2Cards
-                                                      .add(gottenCards[index]);
-                                                  //print(player2Cards);
-                                                  gottenCards.removeAt(index);
-                                                  Navigator.of(context)
-                                                      .pop(false);
-                                                  _setListFromSharedPref();
+                                                  Fluttertoast.showToast(
+                                                    msg:
+                                                        "You Do Not Have Enough Money To Buy this Property",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.CENTER,
+                                                  );
                                                 }
                                               },
                                               child: Text('Yes'),
