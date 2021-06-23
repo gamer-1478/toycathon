@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 ThemeData light = ThemeData(
-    brightness: Brightness.light,
-    accentColor: Color(0xffA0E7E5),
-    highlightColor: Colors.black,
-    cardColor: Colors.white,
-    focusColor: Color(0xffA0E7E5));
+  brightness: Brightness.light,
+  accentColor: Color(0xffA0E7E5),
+  highlightColor: Colors.black,
+  cardColor: Colors.white,
+  focusColor: Color(0xffA0E7E5),
+);
 
 ThemeData dark = ThemeData(
     brightness: Brightness.dark,

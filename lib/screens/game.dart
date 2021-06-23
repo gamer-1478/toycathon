@@ -104,17 +104,17 @@ class _GameContentState extends State<GameContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).focusColor,
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
-          ),
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10.0, 200.0, 10.0, 20.0),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          color: Theme.of(context).accentColor,
+        ),
+        child: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 150.0, 20.0, 0),
                 child: Column(
                   children: <Widget>[
                     Text(
@@ -211,16 +211,16 @@ class _GameContentState extends State<GameContent> {
                   ],
                 ),
               ),
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 20.0,
-                  color: Theme.of(context).focusColor,
-                ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 20.0,
+                color: Theme.of(context).focusColor,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
