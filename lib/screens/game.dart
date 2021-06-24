@@ -59,47 +59,52 @@ class _GameContentState extends State<GameContent> {
 
   Future _setListFromSharedPref() async {
     var allCards = [
-      {"name": "Ajanta and Ellora Caves", "Snumber": 1, "price": 60, "bnum": 1},
-      {"name": "Hawa Mahal", "Snumber": 4, "price": 60, "bnum": 3},
-      {"name": "New Delhi Railway Station", "price": 200, "bnum": 5},
-      {"name": "Golden Temple", "Snumber": 3, "price": 100, "bnum": 6},
-      {"name": "Gateway of India", "Snumber": 2, "price": 100, "bnum": 8},
-      {"name": "Humayun’s Tomb", "Snumber": 5, "price": 120, "bnum": 9},
-      {"name": "Victoria Memorial", "Snumber": 11, "price": 140, "bnum": 11},
-      {"name": "Electric Company", "price": 150, "bnum": 12},
-      {"name": "Sun Temple", "Snumber": 7, "price": 140, "bnum": 13},
-      {"name": "Agra Fort", "Snumber": 12, "price": 160, "bnum": 14},
-      {"name": "Mumbai Railway's Station", "price": 200, "bnum": 15},
-      {"name": "Fatehpur Sikri", "Snumber": 15, "price": 180, "bnum": 16},
-      {"name": "Mysore Palace", "Snumber": 16, "price": 180, "bnum": 18},
-      {"name": "Sanchi Stupa", "Snumber": 14, "price": 200, "bnum": 19},
-      {"name": "Lotus Temple", "Snumber": 13, "price": 220, "bnum": 21},
-      {"name": "Statue of Unity", "Snumber": 21, "price": 220, "bnum": 23},
-      {"name": "Kanch Mahal", "Snumber": 22, "price": 240, "bnum": 24},
-      {"name": "Howrah Railway Station", "price": 200, "bnum": 25},
-      {"name": "Jantar Mantar", "Snumber": 20, "price": 260, "bnum": 26},
+      {
+        "name": "Ajanta and Ellora Caves",
+        "Snumber": 1,
+        "price": 600,
+        "bnum": 1
+      },
+      {"name": "Hawa Mahal", "Snumber": 4, "price": 600, "bnum": 3},
+      {"name": "New Delhi Railway Station", "price": 2000, "bnum": 5},
+      {"name": "Golden Temple", "Snumber": 3, "price": 1000, "bnum": 6},
+      {"name": "Gateway of India", "Snumber": 2, "price": 1000, "bnum": 8},
+      {"name": "Humayun’s Tomb", "Snumber": 5, "price": 1200, "bnum": 9},
+      {"name": "Victoria Memorial", "Snumber": 11, "price": 1400, "bnum": 11},
+      {"name": "Electric Company", "price": 1500, "bnum": 12},
+      {"name": "Sun Temple", "Snumber": 7, "price": 1400, "bnum": 13},
+      {"name": "Agra Fort", "Snumber": 12, "price": 1600, "bnum": 14},
+      {"name": "Mumbai Railway's Station", "price": 2000, "bnum": 15},
+      {"name": "Fatehpur Sikri", "Snumber": 15, "price": 1800, "bnum": 16},
+      {"name": "Mysore Palace", "Snumber": 16, "price": 1800, "bnum": 18},
+      {"name": "Sanchi Stupa", "Snumber": 14, "price": 2000, "bnum": 19},
+      {"name": "Lotus Temple", "Snumber": 13, "price": 2200, "bnum": 21},
+      {"name": "Statue of Unity", "Snumber": 21, "price": 2200, "bnum": 23},
+      {"name": "Kanch Mahal", "Snumber": 22, "price": 2400, "bnum": 24},
+      {"name": "Howrah Railway Station", "price": 2000, "bnum": 25},
+      {"name": "Jantar Mantar", "Snumber": 20, "price": 2600, "bnum": 26},
       {
         "name": "Vivekananda Rock Memorial",
         "Snumber": 19,
-        "price": 260,
+        "price": 2600,
         "bnum": 27
       },
-      {"name": "Waterways", "price": 150, "bnum": 28},
-      {"name": "Charminar", "Snumber": 18, "price": 280, "bnum": 29},
-      {"name": "Raj Ghat", "Snumber": 17, "price": 300, "bnum": 31},
-      {"name": "Qutub Minar", "Snumber": 8, "price": 320, "bnum": 32},
-      {"name": "Red Fort", "Snumber": 9, "price": 320, "bnum": 34},
-      {"name": "Chennai Railway Station", "price": 200, "bnum": 35},
-      {"name": "India Gate", "Snumber": 6, "price": 350, "bnum": 37},
-      {"name": "Taj Mahal", "Snumber": 10, "price": 400, "bnum": 39},
+      {"name": "Waterways", "price": 1500, "bnum": 28},
+      {"name": "Charminar", "Snumber": 18, "price": 2800, "bnum": 29},
+      {"name": "Raj Ghat", "Snumber": 17, "price": 3000, "bnum": 31},
+      {"name": "Qutub Minar", "Snumber": 8, "price": 3200, "bnum": 32},
+      {"name": "Red Fort", "Snumber": 9, "price": 3200, "bnum": 34},
+      {"name": "Chennai Railway Station", "price": 2000, "bnum": 35},
+      {"name": "India Gate", "Snumber": 6, "price": 3500, "bnum": 37},
+      {"name": "Taj Mahal", "Snumber": 10, "price": 4000, "bnum": 39},
     ];
     final prefs = await SharedPreferences.getInstance();
     String newAllCards = jsonEncode(allCards);
     await prefs.setString("availableCards", newAllCards);
     await prefs.setString("player1Cards", jsonEncode([]));
     await prefs.setString("player2Cards", jsonEncode([]));
-    await prefs.setInt("player1Money", 1500);
-    await prefs.setInt("player2Money", 1500);
+    await prefs.setInt("player1Money", 15000);
+    await prefs.setInt("player2Money", 15000);
   }
 
   @override
