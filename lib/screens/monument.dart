@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:bharat_mystery/screens/directions.dart';
+import 'package:bharat_mystery/screens/moreInfo.dart';
 import 'package:bharat_mystery/screens/quiz.dart';
 import 'package:bharat_mystery/screens/streetview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -391,6 +392,32 @@ class _MonumentContentState extends State<MonumentContent> {
                               color: Colors.black,
                               child: Text(
                                 "Play Quiz",
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            MaterialButton(
+                              splashColor: Colors.white,
+                              padding: EdgeInsets.symmetric(horizontal: 35.0),
+                              height: 30.0,
+                              elevation: 5.0,
+                              shape: StadiumBorder(),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          MoreInfo(url: result['moreInfo']),
+                                    ));
+                              },
+                              color: Colors.black,
+                              child: Text(
+                                "Get More Info",
                                 style: TextStyle(
                                   fontSize: 13.0,
                                   color: Colors.white,
